@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class AnalyticsCounter {
 
-	public static ISymptomReader symptomReader = new SymptomReaderImplementation("");
+	public static ISymptomReader symptomReader = new SymptomReaderImplementation("symptoms.txt");
 	public static ISymptomWriter symptomWriter = new SymptomWriterImplementation();
 
 	public static void main(String args[]) throws Exception {

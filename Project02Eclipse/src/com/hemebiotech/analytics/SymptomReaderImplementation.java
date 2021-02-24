@@ -23,7 +23,7 @@ public class SymptomReaderImplementation implements ISymptomReader {
 
 	@Override
 	public HashMap<String, Integer> getSymptoms() throws IOException {
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
+		BufferedReader reader = new BufferedReader (new FileReader(filepath));
 		String line = reader.readLine();
 
 		HashMap<String, Integer> symptoms = new HashMap<>();
