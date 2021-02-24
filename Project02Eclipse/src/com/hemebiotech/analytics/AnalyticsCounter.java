@@ -13,7 +13,13 @@ public class AnalyticsCounter {
 		symptoms = symptomReader.getSymptoms();
 
 		// next generate output
-		symptomWriter.writeResult(symptoms);
+		if (symptoms.size() != 0) {
+			symptomWriter.writeResult(symptoms);
+		} else {
+			HashMap<String, Integer> emptyData = new HashMap<>();
+			emptyData.put("Empty input file - size of input file : ", symptoms.size());
+			symptomWriter.writeResult(emptyData);
+		}
 
 	}
 }
