@@ -1,6 +1,5 @@
 package com.hemebiotech.analytics;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 public class AnalyticsCounter {
@@ -11,6 +10,7 @@ public class AnalyticsCounter {
 	public static void main(String args[]) throws Exception {
 		// first get input
 		TreeMap<String, Integer> symptoms = new TreeMap<>();
+		//sort data with a TreeMap
 		symptoms = new TreeMap<String, Integer>(symptomReader.getSymptoms());
 
 		// next generate output
