@@ -1,7 +1,7 @@
 package com.hemebiotech.analytics;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Anything that will read symptom data from a source
@@ -17,5 +17,5 @@ public interface ISymptomReader {
 	 *
 	 * @return a raw listing of all Symptoms obtained from a data source, duplicates are possible/probable
 	 */
-	HashMap<String, Integer> getSymptoms () throws IOException;
+	ArrayList<String> getSymptoms () throws IOException;
 }
