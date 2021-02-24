@@ -3,7 +3,7 @@ package com.hemebiotech.analytics;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Simple brute force implementation
@@ -22,26 +22,26 @@ public class SymptomReaderImplementation implements ISymptomReader {
 	}
 
 	@Override
-	public HashMap<String, Integer> getSymptoms() throws IOException {
-		BufferedReader reader = new BufferedReader (new FileReader(filepath));
-		String line = reader.readLine();
+	public ArrayList<String> getSymptoms()  {
 
-		HashMap<String, Integer> symptoms = new HashMap<>();
-		int i = 0;	// set i to 0
-		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
+		ArrayList<String> result = new ArrayList<>();
 
-			if (symptoms.containsKey(line)) {
-				symptoms.put(line, symptoms.get(line)+1);
-			} else {
-				symptoms.put(line, 1);
+		if (filepath != null) {
+			try {
+				BufferedReader reader = new BufferedReader (new FileReader(filepath));
+				String line = reader.readLine();
+
+				while (line != null) {
+					result.add(line);
+					line = reader.readLine();
+				}
+				reader.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-
-			line = reader.readLine();	// get another symptom
 		}
 
-		return symptoms;
+		return result;
 	}
 
 }
