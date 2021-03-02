@@ -1,18 +1,18 @@
 package com.hemebiotech.analytics;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 
 public class SymptomCounterImplementation implements ISymptomCounter{
 
     @Override
-    public HashMap<String, Integer> countSymptoms(ArrayList<String> symptoms)  {
-        HashMap<String, Integer> occurrences = new HashMap<>();
-        for (String s:symptoms) {
-            if (occurrences.containsKey(s)) {
-                occurrences.put(s, occurrences.get(s)+1);
+    public TreeMap<String, Integer> countSymptoms(ArrayList<String> symptoms)  {
+        TreeMap<String, Integer> occurrences = new TreeMap<>();
+        for (String symptom:symptoms) {
+            if (occurrences.containsKey(symptom)) {
+                occurrences.put(symptom, occurrences.get(symptom)+1);
             } else {
-                occurrences.put(s, 1);
+                occurrences.put(symptom, 1);
             }
         }
         return occurrences;

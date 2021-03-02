@@ -5,5 +5,5 @@ import java.util.TreeMap;
 
 public interface ISymptomWriter {
 
-    void writeResult(TreeMap<String, Integer> symptoms) throws IOException;
+    void writeResult(TreeMap<String, Integer> symptoms, String outputFilePath) throws IOException;
 }

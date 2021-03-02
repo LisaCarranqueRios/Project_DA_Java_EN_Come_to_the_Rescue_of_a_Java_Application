@@ -5,26 +5,35 @@ import java.util.TreeMap;
 
 public class AnalyticsCounter {
 
-	public static ISymptomReader symptomReader = new SymptomReaderImplementation("symptoms.txt");
-	public static ISymptomCounter symptomCounter = new SymptomCounterImplementation();
-	public static ISymptomWriter symptomWriter = new SymptomWriterImplementation();
+	private String inputFilePath;
+	private String outputFilePath;
 
-	public static void main(String args[]) throws Exception {
+	private Analyze analyze;
+
+	public AnalyticsCounter(String inputFilePath, String outputFilePath) {
+		this.inputFilePath = inputFilePath;
+		this.outputFilePath = outputFilePath;
+		this.analyze = new Analyze(new SymptomReaderImplementation(this.inputFilePath),
+				new SymptomCounterImplementation(), new SymptomWriterImplementation());
+	}
+
+
+
+
+	public void analyze() throws Exception {
 		// first get input
-		ArrayList<String> symptoms;
-		symptoms = symptomReader.getSymptoms();
+		ArrayList<String> symptoms = analyze.symptomReader.getSymptoms();
 		//sort data with a TreeMap
-		TreeMap<String, Integer> occurrences;
-		//count occurences for each symptoms with countSymptoms method
-		occurrences = new TreeMap<String, Integer>(symptomCounter.countSymptoms(symptoms));
+		//count occurrences for each symptoms with countSymptoms method
+		TreeMap<String, Integer> occurrences = analyze.symptomCounter.countSymptoms(symptoms);
 
 		// next generate output
 		if (occurrences.size() != 0) {
-			symptomWriter.writeResult(occurrences);
+			analyze.symptomWriter.writeResult(occurrences, this.outputFilePath);
 		} else {
 			TreeMap<String, Integer> emptyData = new TreeMap<>();
 			emptyData.put("Empty input file - size of input file : ", occurrences.size());
-			symptomWriter.writeResult(emptyData);
+			analyze.symptomWriter.writeResult(emptyData, this.outputFilePath);
 		}
 
 	}
