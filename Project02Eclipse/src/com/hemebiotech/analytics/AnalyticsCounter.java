@@ -1,40 +1,56 @@
 package com.hemebiotech.analytics;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.TreeMap;
 
+/**
+ * A class responsible for analyzing an input file and producing an output file.
+ */
 public class AnalyticsCounter {
 
-	private String inputFilePath;
-	private String outputFilePath;
+    /**
+     * A file path for an input file.
+     */
+    private String inputFilePath;
+    /**
+     * A file path for an output file.
+     */
+    private String outputFilePath;
 
-	private Analyze analyze;
+    /**
+     * The interface containing functions responsible for analyze.
+     *
+     * @see ISymptomAnalyzer
+     */
+    private ISymptomAnalyzer symptomAnalyzer;
 
-	public AnalyticsCounter(String inputFilePath, String outputFilePath) {
-		this.inputFilePath = inputFilePath;
-		this.outputFilePath = outputFilePath;
-		this.analyze = new Analyze(new SymptomReaderImplementation(this.inputFilePath),
-				new SymptomCounterImplementation(), new SymptomWriterImplementation());
-	}
+    /**
+     * A constructor for AnalyticsCounter.
+     * It creates a SymptomAnalyzerImplementation with inputFilePath and outputFilePath as filepath attributes.
+     *
+     * @param inputFilePath The file path for input file.
+     * @param outputFilePath The file path for output file.
+     */
+    public AnalyticsCounter(String inputFilePath, String outputFilePath) {
+        this.inputFilePath = inputFilePath;
+        this.outputFilePath = outputFilePath;
+        this.symptomAnalyzer = new SymptomAnalyzerImplementation(this.inputFilePath, this.outputFilePath);
+    }
 
+    /**
+     * The function which reads data input and writes data output into an output file located at outputFilePath.
+     *
+     * @throws IOException throwing an exception occurring if there is a problem of file reading or writing.
+     */
+    public void analyze() throws IOException {
+        TreeMap<String, Integer> symptoms = symptomAnalyzer.getSymptoms();
+        if (symptoms.size() != 0) {
+            symptomAnalyzer.writeResult(symptoms);
+        } else {
+            TreeMap<String, Integer> emptyData = new TreeMap<>();
+            emptyData.put("Empty input file - size of input file : ", symptoms.size());
+            symptomAnalyzer.writeResult(emptyData);
+        }
 
-
-
-	public void analyze() throws Exception {
-		// first get input
-		ArrayList<String> symptoms = analyze.symptomReader.getSymptoms();
-		//sort data with a TreeMap
-		//count occurrences for each symptoms with countSymptoms method
-		TreeMap<String, Integer> occurrences = analyze.symptomCounter.countSymptoms(symptoms);
-
-		// next generate output
-		if (occurrences.size() != 0) {
-			analyze.symptomWriter.writeResult(occurrences, this.outputFilePath);
-		} else {
-			TreeMap<String, Integer> emptyData = new TreeMap<>();
-			emptyData.put("Empty input file - size of input file : ", occurrences.size());
-			analyze.symptomWriter.writeResult(emptyData, this.outputFilePath);
-		}
-
-	}
+    }
 }
